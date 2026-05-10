@@ -15,14 +15,9 @@ import {
   PURPOSE: Fetches and displays pending service provider requests.
   
   CHANGE LOG:
-  PAST:   - Dark theme with purple cards.
-  PRESENT: - Light gray cards (#D9D9D9).
-           - Black buttons (#000000).
-           - Circle avatars preserved and styled for high contrast.
-  
-  DEPENDENCIES:
-  - firebase/firestore: collection, getDocs, updateDoc, doc, query, where
-  - firebase.js: db instance
+  - Added CURVED edges to cards, avatars, badges, and inner grid items.
+  - Improved contrast and visual hierarchy.
+  - Refined the "D9D9D9" card style to look more modern with rounded corners.
   ============================================================
 */
 
@@ -94,107 +89,107 @@ function RequestList() {
       width: '100%',
     },
     title: {
-      fontSize: 'var(--font-size-2xl)',
+      fontSize: '24px',
       fontWeight: '800',
       marginBottom: 'var(--space-xl)',
       color: '#000',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '-0.02em',
     },
     emptyState: {
       textAlign: 'center',
       padding: 'var(--space-2xl)',
-      background: '#f0f0f0',
-      borderRadius: '0px',
-      border: '2px dashed #000',
-      color: '#000',
+      background: '#ffffff',
+      borderRadius: 'var(--radius-lg)',
+      border: '2px dashed #eee',
+      color: 'var(--color-text-secondary)',
       fontWeight: '600',
     },
     card: {
       background: '#D9D9D9',
-      borderRadius: '0px',
+      borderRadius: 'var(--radius-lg)',
       padding: 'var(--space-xl)',
-      marginBottom: 'var(--space-lg)',
-      boxShadow: 'none',
-      border: '2px solid #000',
+      marginBottom: 'var(--space-xl)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+      border: '1px solid rgba(0,0,0,0.05)',
       display: 'flex',
       flexDirection: 'column',
       gap: 'var(--space-md)',
-      transition: 'transform var(--transition-fast)',
+      transition: 'all var(--transition-normal)',
     },
     cardHeader: {
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--space-md)',
+      gap: 'var(--space-lg)',
       marginBottom: 'var(--space-sm)',
     },
     avatar: {
-      width: '56px',
-      height: '56px',
-      borderRadius: '50%',
+      width: '64px',
+      height: '64px',
+      borderRadius: 'var(--radius-md)',
       background: '#000',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       color: '#fff',
       fontWeight: '800',
-      fontSize: 'var(--font-size-lg)',
-      border: '2px solid #000',
+      fontSize: '20px',
+      boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
     },
     nameInfo: {
       flex: 1,
     },
     name: {
-      fontSize: 'var(--font-size-lg)',
+      fontSize: '20px',
       fontWeight: '800',
       color: '#000',
-      textTransform: 'uppercase',
     },
     badge: {
       display: 'inline-block',
-      padding: '4px 12px',
-      borderRadius: '0px',
-      fontSize: 'var(--font-size-xs)',
+      padding: '6px 14px',
+      borderRadius: 'var(--radius-full)',
+      fontSize: '11px',
       fontWeight: '800',
       textTransform: 'uppercase',
       background: '#000',
       color: '#fff',
-      marginTop: '4px',
+      marginTop: '8px',
+      letterSpacing: '0.05em',
     },
     detailsGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
       gap: 'var(--space-md)',
-      padding: 'var(--space-md)',
+      padding: 'var(--space-lg)',
       background: '#ffffff',
-      border: '1px solid #000',
-      borderRadius: '0px',
+      borderRadius: 'var(--radius-md)',
+      border: '1px solid rgba(0,0,0,0.05)',
     },
     detailItem: {
       display: 'flex',
       flexDirection: 'column',
-      gap: '2px',
+      gap: '4px',
     },
     detailLabel: {
-      fontSize: 'var(--font-size-xs)',
-      color: '#666',
-      fontWeight: '800',
+      fontSize: '11px',
+      color: 'var(--color-text-secondary)',
+      fontWeight: '700',
       textTransform: 'uppercase',
+      letterSpacing: '0.05em',
     },
     detailValue: {
-      fontSize: 'var(--font-size-sm)',
+      fontSize: '15px',
       color: '#000',
-      fontWeight: '600',
+      fontWeight: '700',
     },
     description: {
-      fontSize: 'var(--font-size-sm)',
-      color: '#000',
+      fontSize: '14px',
+      color: '#333',
       fontStyle: 'italic',
-      lineHeight: '1.5',
-      borderLeft: '4px solid #000',
-      paddingLeft: 'var(--space-md)',
+      lineHeight: '1.6',
       background: '#ffffff',
-      padding: 'var(--space-sm) var(--space-md)',
+      padding: '20px',
+      borderRadius: 'var(--radius-md)',
+      borderLeft: '5px solid #000',
     },
     actions: {
       display: 'flex',
@@ -203,55 +198,58 @@ function RequestList() {
     },
     approveBtn: {
       flex: 1,
-      padding: '14px',
-      borderRadius: '0px',
+      padding: '16px',
+      borderRadius: 'var(--radius-md)',
       background: '#000000',
       color: '#fff',
-      border: '2px solid #000000',
+      border: 'none',
       fontWeight: '800',
       cursor: processingId ? 'not-allowed' : 'pointer',
-      transition: 'all var(--transition-fast)',
+      transition: 'all var(--transition-normal)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '8px',
+      gap: '10px',
       textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '0.05em',
+      fontSize: '13px',
+      boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
     },
     rejectBtn: {
       flex: 1,
-      padding: '14px',
-      borderRadius: '0px',
-      background: 'transparent',
+      padding: '16px',
+      borderRadius: 'var(--radius-md)',
+      background: '#ffffff',
       color: '#000',
       border: '2px solid #000',
       fontWeight: '800',
       cursor: processingId ? 'not-allowed' : 'pointer',
-      transition: 'all var(--transition-fast)',
+      transition: 'all var(--transition-normal)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '8px',
+      gap: '10px',
       textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '0.05em',
+      fontSize: '13px',
     }
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Pending Requests</h2>
+      <h2 style={styles.title}>Provider Requests</h2>
 
       {requests.length === 0 ? (
         <div style={styles.emptyState}>
-          <p>NO PENDING REQUESTS</p>
+          <p>Everything is up to date. No pending requests.</p>
         </div>
       ) : (
         requests.map(req => (
           <div
             key={req.id}
             style={styles.card}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.08)'; }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.03)'; }}
           >
             <div style={styles.cardHeader}>
               <div style={styles.avatar}>{getInitials(req.name)}</div>
@@ -267,7 +265,7 @@ function RequestList() {
                 <span style={styles.detailValue}>{req.email}</span>
               </div>
               <div style={styles.detailItem}>
-                <span style={styles.detailLabel}>Years of Experience</span>
+                <span style={styles.detailLabel}>Experience</span>
                 <span style={styles.detailValue}>{req.experience} Years</span>
               </div>
             </div>
@@ -283,20 +281,20 @@ function RequestList() {
                 disabled={processingId !== null}
                 onClick={() => approve(req.userId, req.id)}
                 style={styles.approveBtn}
-                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#333'; e.target.style.borderColor = '#333'; } }}
-                onMouseOut={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.borderColor = '#000'; } }}
+                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#333'; e.target.style.transform = 'translateY(-2px)'; } }}
+                onMouseOut={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.transform = 'translateY(0)'; } }}
               >
-                {processingId === req.id ? "Processing..." : "Approve"}
+                {processingId === req.id ? "Working..." : "✅ Approve"}
               </button>
 
               <button
                 disabled={processingId !== null}
                 onClick={() => reject(req.id)}
                 style={styles.rejectBtn}
-                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.color = '#fff'; } }}
-                onMouseOut={(e) => { if(!processingId) { e.target.style.background = 'transparent'; e.target.style.color = '#000'; } }}
+                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.color = '#fff'; e.target.style.transform = 'translateY(-2px)'; } }}
+                onMouseOut={(e) => { if(!processingId) { e.target.style.background = '#ffffff'; e.target.style.color = '#000'; e.target.style.transform = 'translateY(0)'; } }}
               >
-                {processingId === req.id ? "Processing..." : "Reject"}
+                {processingId === req.id ? "Working..." : "❌ Reject"}
               </button>
             </div>
           </div>

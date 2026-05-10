@@ -8,21 +8,8 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
   PURPOSE: Admin authentication gate.
   
   CHANGE LOG:
-  PAST:   - Simple <div> with padding.
-          - Raw <input> and <button> elements with default browser styling.
-          - No visual hierarchy or branding.
-          - Hardcoded <br /> tags for spacing.
-  
-  PRESENT: - White background, black buttons, black borders.
-           - Logo placeholder included.
-           - Structured with modern black & white aesthetics.
-  
-  DEPENDENCIES:
-  - firebase/auth: signInWithEmailAndPassword (Existing logic, UNCHANGED)
-  - firebase/firestore: doc, getDoc (Existing logic, UNCHANGED)
-  - index.css: Uses CSS variables like --color-bg-primary, etc.
-  
-  REFERENCED BY: src/App.js (Main auth gate)
+  - Updated logo to use <video> tag for .mp4 support.
+  - Configured video for autoplay, loop, and muted behavior.
   ============================================================
 */
 
@@ -31,6 +18,9 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // CHANGE LOGO MP4 PATH HERE
+  const LOGO_VIDEO_URL = "/logo.mp4"; 
 
   const login = async () => {
     setIsLoading(true);
@@ -65,17 +55,17 @@ function Login({ onLogin }) {
       justifyContent: 'center',
       minHeight: '100vh',
       width: '100vw',
-      background: 'var(--color-bg-primary)',
+      background: '#f8f9fa',
       padding: 'var(--space-md)',
     },
     card: {
       background: '#ffffff',
       padding: 'var(--space-2xl)',
       borderRadius: 'var(--radius-lg)',
-      border: '2px solid var(--color-border)',
-      boxShadow: 'var(--shadow-lg)',
+      border: '1.5px solid var(--color-border)',
+      boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
       width: '100%',
-      maxWidth: '400px',
+      maxWidth: '440px',
       textAlign: 'center',
     },
     logoContainer: {
@@ -83,17 +73,13 @@ function Login({ onLogin }) {
       display: 'flex',
       justifyContent: 'center',
     },
-    logo: {
-      width: '80px',
-      height: '80px',
-      background: '#000',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#fff',
-      fontSize: '12px',
-      fontWeight: 'bold',
+    logoVideo: {
+      width: '120px',
+      height: '120px',
+      objectFit: 'cover',
+      borderRadius: 'var(--radius-md)',
+      boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+      backgroundColor: '#000',
     },
     header: {
       marginBottom: 'var(--space-xl)',
@@ -103,61 +89,63 @@ function Login({ onLogin }) {
       fontWeight: '800',
       color: '#000',
       marginBottom: 'var(--space-xs)',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '-0.02em',
     },
     subtitle: {
       color: 'var(--color-text-secondary)',
       fontSize: 'var(--font-size-sm)',
+      fontWeight: '500',
     },
     inputGroup: {
       textAlign: 'left',
-      marginBottom: 'var(--space-md)',
+      marginBottom: 'var(--space-lg)',
     },
     label: {
       display: 'block',
-      fontSize: 'var(--font-size-xs)',
+      fontSize: '12px',
       color: '#000',
-      marginBottom: 'var(--space-xs)',
+      marginBottom: 'var(--space-sm)',
       textTransform: 'uppercase',
-      letterSpacing: '0.05em',
+      letterSpacing: '0.08em',
       fontWeight: '700',
     },
     input: {
       width: '100%',
-      padding: 'var(--space-md)',
+      padding: '16px',
       background: '#ffffff',
-      border: '2px solid #000000',
-      borderRadius: '0px',
+      border: '1.5px solid #000000',
+      borderRadius: 'var(--radius-md)',
       color: '#000',
       fontSize: 'var(--font-size-base)',
       outline: 'none',
       transition: 'all var(--transition-fast)',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
     },
     button: {
       width: '100%',
-      padding: 'var(--space-md)',
+      padding: '18px',
       background: '#000000',
       color: '#ffffff',
-      border: '2px solid #000000',
-      borderRadius: '0px',
+      border: 'none',
+      borderRadius: 'var(--radius-md)',
       fontSize: 'var(--font-size-base)',
       fontWeight: '700',
       cursor: isLoading ? 'not-allowed' : 'pointer',
       marginTop: 'var(--space-md)',
-      transition: 'all var(--transition-fast)',
-      textTransform: 'uppercase',
-      letterSpacing: '1px',
+      transition: 'all var(--transition-normal)',
+      letterSpacing: '0.05em',
       opacity: isLoading ? 0.7 : 1,
+      boxShadow: '0 10px 20px rgba(0,0,0,0.15)',
     },
     error: {
       background: '#fff0f0',
-      color: '#ff0000',
-      padding: 'var(--space-sm) var(--space-md)',
+      color: '#ff4757',
+      padding: '12px 16px',
       borderRadius: 'var(--radius-sm)',
-      fontSize: 'var(--font-size-sm)',
+      fontSize: '13px',
       marginBottom: 'var(--space-md)',
-      border: '1px solid #ff0000',
+      border: '1px solid rgba(255,71,87,0.2)',
+      fontWeight: '500',
     }
   };
 
@@ -165,13 +153,19 @@ function Login({ onLogin }) {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.logoContainer}>
-          {/* PASTE LOGO HERE */}
-          <div style={styles.logo}>LOGO</div>
+          <video 
+            src={LOGO_VIDEO_URL} 
+            style={styles.logoVideo}
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+          />
         </div>
 
         <div style={styles.header}>
-          <h2 style={styles.title}>LBO Admin</h2>
-          <p style={styles.subtitle}>Sign in to your account</p>
+          <h2 style={styles.title}>Welcome Back</h2>
+          <p style={styles.subtitle}>Sign in to access your admin dashboard</p>
         </div>
 
         {error && <div style={styles.error}>{error}</div>}
@@ -183,6 +177,8 @@ function Login({ onLogin }) {
             placeholder="admin@lbo.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onFocus={(e) => { e.target.style.borderColor = '#555'; e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.05)'; }}
+            onBlur={(e) => { e.target.style.borderColor = '#000'; e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; }}
           />
         </div>
 
@@ -194,6 +190,8 @@ function Login({ onLogin }) {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onFocus={(e) => { e.target.style.borderColor = '#555'; e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.05)'; }}
+            onBlur={(e) => { e.target.style.borderColor = '#000'; e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; }}
           />
         </div>
 
@@ -201,8 +199,8 @@ function Login({ onLogin }) {
           style={styles.button} 
           onClick={login}
           disabled={isLoading}
-          onMouseOver={(e) => { if(!isLoading) { e.target.style.background = '#333333'; e.target.style.borderColor = '#333333'; } }}
-          onMouseOut={(e) => { if(!isLoading) { e.target.style.background = '#000000'; e.target.style.borderColor = '#000000'; } }}
+          onMouseOver={(e) => { if(!isLoading) { e.target.style.background = '#333333'; e.target.style.transform = 'translateY(-2px)'; } }}
+          onMouseOut={(e) => { if(!isLoading) { e.target.style.background = '#000000'; e.target.style.transform = 'translateY(0)'; } }}
         >
           {isLoading ? "Authenticating..." : "Sign In"}
         </button>

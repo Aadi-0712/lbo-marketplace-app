@@ -8,20 +8,16 @@ import RequestList from "./components/RequestList";
   PURPOSE: Root application component and Dashboard Layout.
   
   CHANGE LOG:
-  PAST:   - Dark theme with purple accents.
-  PRESENT: - White background, black borders, black buttons.
-           - Logo centered in the dashboard.
-           - Circle avatars preserved.
-  
-  DEPENDENCIES:
-  - Login: Auth gate component.
-  - RequestList: Main feature component.
-  - index.css: Design system variables.
+  - Updated logo to use <video> tag for .mp4 support.
+  - Configured video for autoplay, loop, and muted behavior.
   ============================================================
 */
 
 function App() {
   const [user, setUser] = useState(null);
+
+  // CHANGE LOGO MP4 PATH HERE
+  const LOGO_VIDEO_URL = "/logo.mp4";
 
   if (!user) {
     return <Login onLogin={setUser} />;
@@ -31,12 +27,12 @@ function App() {
     layout: {
       display: 'flex',
       minHeight: '100vh',
-      background: 'var(--color-bg-primary)',
+      background: 'var(--color-bg-secondary)',
     },
     sidebar: {
       width: 'var(--sidebar-width)',
       background: 'var(--color-sidebar)',
-      borderRight: '2px solid var(--color-border)',
+      borderRight: '1.5px solid #eee',
       display: 'flex',
       flexDirection: 'column',
       padding: 'var(--space-xl) var(--space-md)',
@@ -45,66 +41,67 @@ function App() {
       left: 0,
       top: 0,
       zIndex: 100,
+      boxShadow: '4px 0 20px rgba(0,0,0,0.02)',
     },
     brand: {
       marginBottom: 'var(--space-2xl)',
-      padding: '0 var(--space-md)',
+      padding: 'var(--space-md)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       gap: 'var(--space-sm)',
+      background: '#fcfcfc',
+      borderRadius: 'var(--radius-lg)',
+      border: '1px solid #f0f0f0',
     },
-    logoPlaceholder: {
-      width: '60px',
-      height: '60px',
-      background: '#000',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#fff',
-      fontSize: '10px',
-      fontWeight: 'bold',
-      marginBottom: 'var(--space-sm)',
+    logoVideo: {
+      width: '70px',
+      height: '70px',
+      objectFit: 'cover',
+      borderRadius: 'var(--radius-md)',
+      backgroundColor: '#000',
     },
     brandName: {
-      fontSize: 'var(--font-size-lg)',
+      fontSize: '16px',
       fontWeight: '800',
       color: '#000',
-      letterSpacing: '1px',
+      letterSpacing: '0.05em',
       textTransform: 'uppercase',
     },
     nav: {
       flex: 1,
+      marginTop: 'var(--space-xl)',
     },
     navItem: {
       display: 'flex',
       alignItems: 'center',
-      padding: 'var(--space-md)',
-      color: '#000',
-      background: 'var(--color-sidebar-active)',
-      border: '2px solid #000',
-      borderRadius: '0px',
+      padding: '16px',
+      color: '#fff',
+      background: '#000',
+      borderRadius: 'var(--radius-md)',
       fontWeight: '700',
       marginBottom: 'var(--space-sm)',
       cursor: 'default',
       textTransform: 'uppercase',
-      fontSize: 'var(--font-size-sm)',
+      fontSize: '13px',
+      letterSpacing: '0.05em',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     },
     logoutBtn: {
       display: 'flex',
       alignItems: 'center',
-      padding: 'var(--space-md)',
+      padding: '16px',
       color: '#000',
-      background: 'transparent',
-      border: '2px solid #000',
-      borderRadius: '0px',
+      background: '#ffffff',
+      border: '1.5px solid #000',
+      borderRadius: 'var(--radius-md)',
       fontWeight: '700',
       cursor: 'pointer',
-      transition: 'all var(--transition-fast)',
+      transition: 'all var(--transition-normal)',
       justifyContent: 'center',
       textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '0.05em',
+      fontSize: '13px',
     },
     main: {
       flex: 1,
@@ -115,7 +112,7 @@ function App() {
     header: {
       height: 'var(--header-height)',
       background: '#ffffff',
-      borderBottom: '2px solid #000',
+      borderBottom: '1.5px solid #eee',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -132,35 +129,34 @@ function App() {
       alignItems: 'center',
       gap: 'var(--space-sm)',
     },
-    headerLogoBox: {
-        width: '40px',
-        height: '40px',
-        background: '#000',
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#fff',
-        fontSize: '8px',
-        fontWeight: 'bold',
+    headerLogoVideo: {
+        width: '56px',
+        height: '56px',
+        objectFit: 'cover',
+        borderRadius: 'var(--radius-md)',
+        backgroundColor: '#000',
     },
     headerTitle: {
-      fontSize: 'var(--font-size-md)',
+      fontSize: '18px',
       fontWeight: '800',
       textTransform: 'uppercase',
-      letterSpacing: '1px',
+      letterSpacing: '0.02em',
     },
     userBadge: {
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--space-sm)',
-      fontSize: 'var(--font-size-sm)',
+      gap: 'var(--space-md)',
+      fontSize: '14px',
       color: '#000',
       fontWeight: '600',
+      padding: '8px 16px',
+      background: '#f8f9fa',
+      borderRadius: 'var(--radius-full)',
+      border: '1px solid #eee',
     },
     avatar: {
-      width: '32px',
-      height: '32px',
+      width: '36px',
+      height: '36px',
       borderRadius: '50%',
       background: '#000',
       display: 'flex',
@@ -168,8 +164,9 @@ function App() {
       justifyContent: 'center',
       color: '#fff',
       fontWeight: '700',
-      fontSize: '12px',
-      border: '1px solid #000',
+      fontSize: '13px',
+      border: '2px solid #fff',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
     },
     content: {
       padding: 'var(--space-2xl)',
@@ -184,12 +181,20 @@ function App() {
       {/* Sidebar Navigation */}
       <aside style={styles.sidebar}>
         <div style={styles.brand}>
-          <div style={styles.logoPlaceholder}>LOGO</div>
+          <video 
+            src={LOGO_VIDEO_URL} 
+            style={styles.logoVideo}
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+          />
           <div style={styles.brandName}>LBO ADMIN</div>
         </div>
         
         <div style={styles.nav}>
           <div style={styles.navItem}>
+            <span style={{marginRight: '12px'}}>📊</span>
             <span>Dashboard</span>
           </div>
         </div>
@@ -197,8 +202,8 @@ function App() {
         <button
           onClick={() => setUser(null)}
           style={styles.logoutBtn}
-          onMouseOver={(e) => { e.target.style.background = '#000'; e.target.style.color = '#fff'; }}
-          onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = '#000'; }}
+          onMouseOver={(e) => { e.target.style.background = '#000'; e.target.style.color = '#fff'; e.target.style.transform = 'translateY(-2px)'; }}
+          onMouseOut={(e) => { e.target.style.background = '#ffffff'; e.target.style.color = '#000'; e.target.style.transform = 'translateY(0)'; }}
         >
           Logout
         </button>
@@ -207,11 +212,18 @@ function App() {
       {/* Main Content Area */}
       <main style={styles.main}>
         <header style={styles.header}>
-          <div style={styles.headerTitle}>Provider Management</div>
+          <div style={styles.headerTitle}>Overview</div>
           
           <div style={styles.headerLogo}>
-             <div style={styles.headerLogoBox}>LOGO</div>
-             <span style={{fontWeight: '800', fontSize: '14px'}}>LBO</span>
+             <video 
+                src={LOGO_VIDEO_URL} 
+                style={styles.headerLogoVideo}
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+             />
+             <span style={{fontWeight: '900', fontSize: '18px', letterSpacing: '0.05em'}}>LBO</span>
           </div>
 
           <div style={styles.userBadge}>
