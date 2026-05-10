@@ -8,8 +8,8 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
   PURPOSE: Admin authentication gate.
   
   CHANGE LOG:
-  - Updated logo to use <video> tag for .mp4 support.
-  - Configured video for autoplay, loop, and muted behavior.
+  - Reduced dimensions for a more MINIMALIST feel.
+  - Smaller card, logo, and refined input spacing.
   ============================================================
 */
 
@@ -19,7 +19,6 @@ function Login({ onLogin }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // CHANGE LOGO MP4 PATH HERE
   const LOGO_VIDEO_URL = "/logo.mp4"; 
 
   const login = async () => {
@@ -35,7 +34,7 @@ function Login({ onLogin }) {
       const adminDoc = await getDoc(doc(db, "admins", uid));
 
       if (!adminDoc.exists()) {
-        setError("Access denied: Not an admin");
+        setError("Access denied");
         setIsLoading(false);
         return;
       }
@@ -55,97 +54,93 @@ function Login({ onLogin }) {
       justifyContent: 'center',
       minHeight: '100vh',
       width: '100vw',
-      background: '#f8f9fa',
+      background: '#ffffff',
       padding: 'var(--space-md)',
     },
     card: {
       background: '#ffffff',
-      padding: 'var(--space-2xl)',
+      padding: 'var(--space-xl)', // Reduced from space-2xl
       borderRadius: 'var(--radius-lg)',
-      border: '1.5px solid var(--color-border)',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+      border: '1.5px solid #000',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
       width: '100%',
-      maxWidth: '440px',
+      maxWidth: '380px', // Reduced from 440px
       textAlign: 'center',
     },
     logoContainer: {
-      marginBottom: 'var(--space-xl)',
+      marginBottom: 'var(--space-lg)',
       display: 'flex',
       justifyContent: 'center',
     },
     logoVideo: {
-      width: '120px',
-      height: '120px',
+      width: '80px', // Reduced from 120px
+      height: '80px',
       objectFit: 'cover',
       borderRadius: 'var(--radius-md)',
-      boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
       backgroundColor: '#000',
     },
     header: {
       marginBottom: 'var(--space-xl)',
     },
     title: {
-      fontSize: 'var(--font-size-2xl)',
-      fontWeight: '800',
+      fontSize: '20px', // Reduced from 2xl
+      fontWeight: '900',
       color: '#000',
-      marginBottom: 'var(--space-xs)',
+      marginBottom: '4px',
       letterSpacing: '-0.02em',
     },
     subtitle: {
       color: 'var(--color-text-secondary)',
-      fontSize: 'var(--font-size-sm)',
-      fontWeight: '500',
+      fontSize: '12px',
+      fontWeight: '600',
     },
     inputGroup: {
       textAlign: 'left',
-      marginBottom: 'var(--space-lg)',
+      marginBottom: 'var(--space-md)',
     },
     label: {
       display: 'block',
-      fontSize: '12px',
+      fontSize: '10px',
       color: '#000',
-      marginBottom: 'var(--space-sm)',
+      marginBottom: '4px',
       textTransform: 'uppercase',
-      letterSpacing: '0.08em',
-      fontWeight: '700',
+      letterSpacing: '0.05em',
+      fontWeight: '800',
     },
     input: {
       width: '100%',
-      padding: '16px',
+      padding: '12px', // Reduced from 16px
       background: '#ffffff',
       border: '1.5px solid #000000',
       borderRadius: 'var(--radius-md)',
       color: '#000',
-      fontSize: 'var(--font-size-base)',
+      fontSize: '14px',
       outline: 'none',
       transition: 'all var(--transition-fast)',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
     },
     button: {
       width: '100%',
-      padding: '18px',
+      padding: '14px', // Reduced from 18px
       background: '#000000',
       color: '#ffffff',
       border: 'none',
       borderRadius: 'var(--radius-md)',
-      fontSize: 'var(--font-size-base)',
-      fontWeight: '700',
+      fontSize: '14px',
+      fontWeight: '800',
       cursor: isLoading ? 'not-allowed' : 'pointer',
-      marginTop: 'var(--space-md)',
+      marginTop: 'var(--space-sm)',
       transition: 'all var(--transition-normal)',
-      letterSpacing: '0.05em',
       opacity: isLoading ? 0.7 : 1,
-      boxShadow: '0 10px 20px rgba(0,0,0,0.15)',
     },
     error: {
       background: '#fff0f0',
-      color: '#ff4757',
-      padding: '12px 16px',
+      color: '#ee5253',
+      padding: '10px',
       borderRadius: 'var(--radius-sm)',
-      fontSize: '13px',
+      fontSize: '12px',
       marginBottom: 'var(--space-md)',
-      border: '1px solid rgba(255,71,87,0.2)',
-      fontWeight: '500',
+      border: '1px solid rgba(238,82,83,0.1)',
+      fontWeight: '600',
     }
   };
 
@@ -164,8 +159,8 @@ function Login({ onLogin }) {
         </div>
 
         <div style={styles.header}>
-          <h2 style={styles.title}>Welcome Back</h2>
-          <p style={styles.subtitle}>Sign in to access your admin dashboard</p>
+          <h2 style={styles.title}>Admin Panel</h2>
+          <p style={styles.subtitle}>Secure login for LBO Management</p>
         </div>
 
         {error && <div style={styles.error}>{error}</div>}
@@ -177,8 +172,6 @@ function Login({ onLogin }) {
             placeholder="admin@lbo.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onFocus={(e) => { e.target.style.borderColor = '#555'; e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.05)'; }}
-            onBlur={(e) => { e.target.style.borderColor = '#000'; e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; }}
           />
         </div>
 
@@ -190,8 +183,6 @@ function Login({ onLogin }) {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onFocus={(e) => { e.target.style.borderColor = '#555'; e.target.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.05)'; }}
-            onBlur={(e) => { e.target.style.borderColor = '#000'; e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; }}
           />
         </div>
 
@@ -199,10 +190,8 @@ function Login({ onLogin }) {
           style={styles.button} 
           onClick={login}
           disabled={isLoading}
-          onMouseOver={(e) => { if(!isLoading) { e.target.style.background = '#333333'; e.target.style.transform = 'translateY(-2px)'; } }}
-          onMouseOut={(e) => { if(!isLoading) { e.target.style.background = '#000000'; e.target.style.transform = 'translateY(0)'; } }}
         >
-          {isLoading ? "Authenticating..." : "Sign In"}
+          {isLoading ? "..." : "Sign In"}
         </button>
       </div>
     </div>

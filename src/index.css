@@ -1,45 +1,44 @@
 /* FILE: index.css | PURPOSE: Global design tokens & resets
-   PAST: Minimal body margin reset, system fonts only
-   PRESENT: Full design system with CSS variables, light theme, black & white aesthetics with CURVED edges
-   DEPENDENCY: Google Fonts "Inter" loaded in public/index.html
+   PAST: Large, bulky dimensions.
+   PRESENT: Minimal, compact design system with refined spacing and smaller footprints.
    REFERENCED BY: App.js, Login.js, RequestList.js */
 
 :root {
   --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f8f9fa;
+  --color-bg-secondary: #fdfdfd;
   --color-bg-card: #D9D9D9;
   --color-bg-card-hover: #cfcfcf;
   --color-bg-input: #ffffff;
   --color-sidebar: #ffffff;
-  --color-sidebar-hover: #f3f3f3;
-  --color-sidebar-active: #eeeeee;
+  --color-sidebar-hover: #f9f9f9;
+  --color-sidebar-active: #f0f0f0;
   --color-accent: #000000;
-  --color-accent-hover: #333333;
-  --color-accent-glow: rgba(0, 0, 0, 0.05);
+  --color-accent-hover: #222222;
+  --color-accent-glow: rgba(0, 0, 0, 0.02);
   --color-success: #000000;
-  --color-success-hover: #333333;
-  --color-danger: #ff4757;
-  --color-danger-hover: #ff6b81;
-  --color-warning: #ffa502;
+  --color-success-hover: #222222;
+  --color-danger: #ee5253;
+  --color-danger-hover: #ff6b6b;
+  --color-warning: #feca57;
   --color-text-primary: #000000;
-  --color-text-secondary: #57606f;
-  --color-text-muted: #a4b0be;
+  --color-text-secondary: #576574;
+  --color-text-muted: #8395a7;
   --color-border: #000000;
   --color-border-light: #f1f2f6;
-  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
-  --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.05);
   --shadow-glow: none;
-  --space-xs: 4px; --space-sm: 8px; --space-md: 16px;
-  --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px;
-  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px;
-  --radius-xl: 30px; --radius-full: 9999px;
+  --space-xs: 4px; --space-sm: 8px; --space-md: 12px;
+  --space-lg: 16px; --space-xl: 24px; --space-2xl: 32px;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px;
+  --radius-xl: 24px; --radius-full: 9999px;
   --font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  --sidebar-width: 280px;
-  --header-height: 80px;
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+  --sidebar-width: 240px; /* Reduced from 280px */
+  --header-height: 64px; /* Reduced from 80px */
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -50,13 +49,13 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-primary); }
-::-webkit-scrollbar-thumb { background: #ced4da; border-radius: var(--radius-full); border: 2px solid var(--color-bg-primary); }
-::-webkit-scrollbar-thumb:hover { background: #adb5bd; }
+::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: #bdbdbd; }
 
 code { font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; }

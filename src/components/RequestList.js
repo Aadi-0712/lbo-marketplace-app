@@ -15,9 +15,9 @@ import {
   PURPOSE: Fetches and displays pending service provider requests.
   
   CHANGE LOG:
-  - Added CURVED edges to cards, avatars, badges, and inner grid items.
-  - Improved contrast and visual hierarchy.
-  - Refined the "D9D9D9" card style to look more modern with rounded corners.
+  - Reduced dimensions and font sizes for a MINIMALIST look.
+  - More compact cards and data grids.
+  - Refined empty state and action buttons.
   ============================================================
 */
 
@@ -84,184 +84,194 @@ function RequestList() {
     return name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
   };
 
+  const getAvatarColor = (name) => {
+    if (!name) return "#000000";
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const colors = [
+      "#E74C3C", "#3498DB", "#2ECC71", "#F1C40F", 
+      "#9B59B6", "#1ABC9C", "#E67E22", "#34495E"
+    ];
+    return colors[Math.abs(hash) % colors.length];
+  };
+
   const styles = {
     container: {
       width: '100%',
     },
     title: {
-      fontSize: '24px',
-      fontWeight: '800',
+      fontSize: '20px', // Reduced from 28px
+      fontWeight: '900',
       marginBottom: 'var(--space-xl)',
       color: '#000',
-      letterSpacing: '-0.02em',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
     },
     emptyState: {
       textAlign: 'center',
-      padding: 'var(--space-2xl)',
+      padding: '40px var(--space-xl)', // Reduced from 80px
       background: '#ffffff',
       borderRadius: 'var(--radius-lg)',
-      border: '2px dashed #eee',
-      color: 'var(--color-text-secondary)',
-      fontWeight: '600',
+      border: '2px dashed #000000',
+      color: '#000',
+      maxWidth: '600px', // Added limit to width
+    },
+    emptyStateTitle: {
+      fontSize: '18px', // Reduced from 24px
+      fontWeight: '900',
+      marginBottom: '4px',
+      textTransform: 'uppercase',
     },
     card: {
       background: '#D9D9D9',
-      borderRadius: 'var(--radius-lg)',
-      padding: 'var(--space-xl)',
-      marginBottom: 'var(--space-xl)',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-      border: '1px solid rgba(0,0,0,0.05)',
+      borderRadius: 'var(--radius-md)',
+      padding: 'var(--space-xl)', // Reduced from space-2xl
+      marginBottom: 'var(--space-lg)',
+      border: '1.5px solid #000000',
       display: 'flex',
       flexDirection: 'column',
       gap: 'var(--space-md)',
-      transition: 'all var(--transition-normal)',
+      boxShadow: '4px 4px 0px #000000', // Reduced shadow from 10px
     },
     cardHeader: {
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--space-lg)',
-      marginBottom: 'var(--space-sm)',
+      gap: 'var(--space-md)',
     },
-    avatar: {
-      width: '64px',
-      height: '64px',
-      borderRadius: 'var(--radius-md)',
-      background: '#000',
+    avatar: (name) => ({
+      width: '48px', // Reduced from 72px
+      height: '48px',
+      borderRadius: '50%',
+      background: getAvatarColor(name),
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       color: '#fff',
-      fontWeight: '800',
-      fontSize: '20px',
-      boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-    },
+      fontWeight: '900',
+      fontSize: '16px', // Reduced from 24px
+      border: '2px solid #000000',
+    }),
     nameInfo: {
       flex: 1,
     },
     name: {
-      fontSize: '20px',
-      fontWeight: '800',
+      fontSize: '18px', // Reduced from 24px
+      fontWeight: '900',
       color: '#000',
+      textTransform: 'uppercase',
     },
     badge: {
       display: 'inline-block',
-      padding: '6px 14px',
+      padding: '4px 12px', // Reduced from 8px 20px
       borderRadius: 'var(--radius-full)',
-      fontSize: '11px',
-      fontWeight: '800',
+      fontSize: '10px', // Reduced from 12px
+      fontWeight: '900',
       textTransform: 'uppercase',
-      background: '#000',
+      background: '#000000',
       color: '#fff',
-      marginTop: '8px',
+      marginTop: '6px',
       letterSpacing: '0.05em',
     },
     detailsGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
       gap: 'var(--space-md)',
-      padding: 'var(--space-lg)',
+      padding: 'var(--space-md)',
       background: '#ffffff',
-      borderRadius: 'var(--radius-md)',
-      border: '1px solid rgba(0,0,0,0.05)',
+      borderRadius: 'var(--radius-sm)',
+      border: '1.5px solid #000000',
     },
     detailItem: {
       display: 'flex',
       flexDirection: 'column',
-      gap: '4px',
+      gap: '2px',
     },
     detailLabel: {
-      fontSize: '11px',
-      color: 'var(--color-text-secondary)',
-      fontWeight: '700',
+      fontSize: '10px',
+      color: '#666',
+      fontWeight: '900',
       textTransform: 'uppercase',
-      letterSpacing: '0.05em',
     },
     detailValue: {
-      fontSize: '15px',
+      fontSize: '14px',
       color: '#000',
-      fontWeight: '700',
+      fontWeight: '800',
     },
     description: {
-      fontSize: '14px',
+      fontSize: '13px',
       color: '#333',
       fontStyle: 'italic',
-      lineHeight: '1.6',
+      lineHeight: '1.4',
       background: '#ffffff',
-      padding: '20px',
-      borderRadius: 'var(--radius-md)',
-      borderLeft: '5px solid #000',
+      padding: '12px 16px',
+      borderRadius: 'var(--radius-sm)',
+      border: '1.5px solid #000000',
     },
     actions: {
       display: 'flex',
       gap: 'var(--space-md)',
-      marginTop: 'var(--space-sm)',
     },
     approveBtn: {
       flex: 1,
-      padding: '16px',
-      borderRadius: 'var(--radius-md)',
+      padding: '12px', // Reduced from 20px
+      borderRadius: 'var(--radius-sm)',
       background: '#000000',
       color: '#fff',
-      border: 'none',
-      fontWeight: '800',
+      border: '1.5px solid #000000',
+      fontWeight: '900',
       cursor: processingId ? 'not-allowed' : 'pointer',
-      transition: 'all var(--transition-normal)',
+      transition: 'all var(--transition-fast)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '10px',
+      gap: '8px',
       textTransform: 'uppercase',
-      letterSpacing: '0.05em',
-      fontSize: '13px',
-      boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+      fontSize: '12px',
     },
     rejectBtn: {
       flex: 1,
-      padding: '16px',
-      borderRadius: 'var(--radius-md)',
+      padding: '12px',
+      borderRadius: 'var(--radius-sm)',
       background: '#ffffff',
       color: '#000',
-      border: '2px solid #000',
-      fontWeight: '800',
+      border: '1.5px solid #000000',
+      fontWeight: '900',
       cursor: processingId ? 'not-allowed' : 'pointer',
-      transition: 'all var(--transition-normal)',
+      transition: 'all var(--transition-fast)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '10px',
+      gap: '8px',
       textTransform: 'uppercase',
-      letterSpacing: '0.05em',
-      fontSize: '13px',
+      fontSize: '12px',
     }
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Provider Requests</h2>
+      <h2 style={styles.title}>Pending Approvals</h2>
 
       {requests.length === 0 ? (
         <div style={styles.emptyState}>
-          <p>Everything is up to date. No pending requests.</p>
+          <div style={styles.emptyStateTitle}>Queue Empty</div>
+          <p style={{fontWeight: '700', fontSize: '12px'}}>All provider requests have been processed.</p>
         </div>
       ) : (
         requests.map(req => (
-          <div
-            key={req.id}
-            style={styles.card}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.08)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.03)'; }}
-          >
+          <div key={req.id} style={styles.card}>
             <div style={styles.cardHeader}>
-              <div style={styles.avatar}>{getInitials(req.name)}</div>
+              <div style={styles.avatar(req.name)}>{getInitials(req.name)}</div>
               <div style={styles.nameInfo}>
-                <div style={styles.name}>{req.name || "Unknown Provider"}</div>
-                <div style={styles.badge}>{req.serviceType || "General"}</div>
+                <div style={styles.name}>{req.name || "New Provider"}</div>
+                <div style={styles.badge}>{req.serviceType || "Unclassified"}</div>
               </div>
             </div>
 
             <div style={styles.detailsGrid}>
               <div style={styles.detailItem}>
-                <span style={styles.detailLabel}>Email Address</span>
+                <span style={styles.detailLabel}>Email</span>
                 <span style={styles.detailValue}>{req.email}</span>
               </div>
               <div style={styles.detailItem}>
@@ -281,20 +291,16 @@ function RequestList() {
                 disabled={processingId !== null}
                 onClick={() => approve(req.userId, req.id)}
                 style={styles.approveBtn}
-                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#333'; e.target.style.transform = 'translateY(-2px)'; } }}
-                onMouseOut={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.transform = 'translateY(0)'; } }}
               >
-                {processingId === req.id ? "Working..." : "✅ Approve"}
+                {processingId === req.id ? "..." : "Approve"}
               </button>
 
               <button
                 disabled={processingId !== null}
                 onClick={() => reject(req.id)}
                 style={styles.rejectBtn}
-                onMouseOver={(e) => { if(!processingId) { e.target.style.background = '#000'; e.target.style.color = '#fff'; e.target.style.transform = 'translateY(-2px)'; } }}
-                onMouseOut={(e) => { if(!processingId) { e.target.style.background = '#ffffff'; e.target.style.color = '#000'; e.target.style.transform = 'translateY(0)'; } }}
               >
-                {processingId === req.id ? "Working..." : "❌ Reject"}
+                {processingId === req.id ? "..." : "Decline"}
               </button>
             </div>
           </div>
