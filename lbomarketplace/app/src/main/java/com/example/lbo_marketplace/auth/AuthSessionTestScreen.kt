@@ -9,6 +9,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+/**
+ * Screen providing Login and Registration functionality.
+ * 
+ * WHAT IT DOES:
+ * - Collects Name, Email, and Password from the user.
+ * - Triggers [AuthViewModel.register] or [AuthViewModel.login].
+ * - Displays the current auth state (Loading, Error, etc.).
+ * 
+ * ROLE IN NAVIGATION:
+ * - Serves as the primary landing page when no user is logged in.
+ * - Acts as the **FALLBACK STRATEGY**: If any session error occurs, users are redirected here.
+ * 
+ * REFERENCED IN: [AppNavigation]
+ */
 @Composable
 fun AuthSessionTestScreen(viewModel: AuthViewModel = viewModel()) {
 
