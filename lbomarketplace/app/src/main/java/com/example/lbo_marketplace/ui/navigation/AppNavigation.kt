@@ -144,10 +144,10 @@ fun LoadingScreen() {
 
         // Branding Text
         Text(
-            text = "Loading LBO Marketplace...",
-            style = MaterialTheme.typography.titleMedium,
+            text = "Lbo",
+            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
     }
