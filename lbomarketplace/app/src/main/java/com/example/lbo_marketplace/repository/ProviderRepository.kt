@@ -8,7 +8,10 @@ class ProviderRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    // 🔥 APPLY FUNCTION (you already have)
+    // =========================================================
+    // 🔥 APPLY FOR PROVIDER WITH FULL DETAILS
+    // =========================================================
+
     suspend fun applyForProviderWithDetails(
         userId: String,
         email: String,
@@ -17,44 +20,103 @@ class ProviderRepository {
         description: String,
         experience: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        verificationDocUrl: String
     ): Result<String> {
+
         return try {
+
             val data = hashMapOf(
+
                 "userId" to userId,
+
                 "email" to email,
+
                 "name" to name,
+
                 "serviceType" to serviceType,
+
                 "description" to description,
+
                 "experience" to experience,
+
                 "latitude" to latitude,
+
                 "longitude" to longitude,
-                "status" to "PENDING"
+
+                // 🔥 CLOUDINARY URLS
+
+                "verificationDocUrl" to verificationDocUrl,
+
+                // 🔥 STATUS
+                "status" to "PENDING",
+
+                // 🔥 TIMESTAMP
+                "createdAt" to System.currentTimeMillis()
             )
 
-            db.collection("provider_requests").add(data).await()
+            db.collection("provider_requests")
+                .document(userId)
+                .set(data)
+                .await()
 
-            Result.success("Application Submitted")
+            Result.success(
+                "Application submitted successfully"
+            )
+
         } catch (e: Exception) {
+
             Result.failure(e)
         }
     }
 
-    // 🔥 THIS IS WHAT YOU ARE MISSING
-    suspend fun getApprovedProviders(): List<Provider> {
+    // =========================================================
+    // 🔥 FETCH APPROVED PROVIDERS
+    // =========================================================
 
-        val snapshot = db.collection("provider_requests")
-            .whereEqualTo("status", "APPROVED")
-            .get()
-            .await()
+    suspend fun getApprovedProviders():
+            Result<List<Provider>> {
 
-        return snapshot.documents.map {
-            Provider(
-                id = it.id,
-                name = it.getString("name") ?: "",
-                serviceType = it.getString("serviceType") ?: "",
-                status = it.getString("status") ?: ""
-            )
+        return try {
+
+            val snapshot = db.collection("provider_requests")
+                .whereEqualTo("status", "APPROVED")
+                .get()
+                .await()
+
+            val providers = snapshot.documents.mapNotNull { doc ->
+
+                Provider(
+                    id = doc.id,
+
+                    name = doc.getString("name") ?: "",
+
+                    serviceType =
+                        doc.getString("serviceType") ?: "",
+
+                    description =
+                        doc.getString("description") ?: "",
+
+                    experience =
+                        doc.getString("experience") ?: "",
+
+                    latitude =
+                        doc.getDouble("latitude") ?: 0.0,
+
+                    longitude =
+                        doc.getDouble("longitude") ?: 0.0,
+
+
+                    verificationDocUrl =
+                        doc.getString("verificationDocUrl") ?: ""
+                )
+            }
+
+            Result.success(providers)
+
+        } catch (e: Exception) {
+
+            Result.failure(e)
         }
     }
 }

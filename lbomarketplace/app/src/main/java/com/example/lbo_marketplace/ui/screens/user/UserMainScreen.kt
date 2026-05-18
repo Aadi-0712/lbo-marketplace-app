@@ -16,7 +16,8 @@ import com.example.lbo_marketplace.auth.ProviderViewModel
 import com.example.lbo_marketplace.booking.BookingViewModel
 import com.example.lbo_marketplace.ui.screens.user.chat.ChatScreen
 import com.google.firebase.auth.FirebaseAuth
-
+import androidx.compose.ui.platform.LocalContext
+import android.net.Uri
 @Composable
 fun UserMainScreen(
     authViewModel: AuthViewModel = viewModel()
@@ -37,6 +38,7 @@ fun UserMainScreen(
     val bookingViewModel: BookingViewModel = viewModel()
 
     val user = FirebaseAuth.getInstance().currentUser
+    val context = LocalContext.current
 
     // ===================== 🤖 CHAT SCREEN =====================
     if (showChatScreen) {
@@ -72,10 +74,19 @@ fun UserMainScreen(
     // ===================== 🔥 APPLY SCREEN =====================
     if (showApplyScreen) {
 
-        ApplyProviderScreen { name, serviceType, description, experience, lat, lng ->
+        ApplyProviderScreen {
+                name: String,
+                serviceType: String,
+                description: String,
+                experience: String,
+                lat: Double,
+                lng: Double,
+                verificationDocUri: Uri ->
 
             user?.let {
+
                 providerViewModel.applyWithDetails(
+                    context = context,
                     userId = it.uid,
                     email = it.email ?: "",
                     name = name,
@@ -83,7 +94,8 @@ fun UserMainScreen(
                     description = description,
                     experience = experience,
                     latitude = lat,
-                    longitude = lng
+                    longitude = lng,
+                    verificationDocUri = verificationDocUri
                 )
             }
 
@@ -167,4 +179,4 @@ fun UserMainScreen(
             }
         }
     }
-}
+}
